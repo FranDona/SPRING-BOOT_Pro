@@ -49,5 +49,10 @@ public class ReservasService {
     public List<JoinReservasClientes> dameReservasClientes() {
         return reservasRepository.verReservasClientes();
     }
+    
+    // Otro método para un JOIN con parámetros de entrada
+    public List<JoinReservasClientes> damePorHabitacionEntrada(int hab, LocalDate entrada) {
+        return reservasRepository.verPorHabitacionEntrada(hab, entrada);
+    }
 
 }

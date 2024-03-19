@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -167,6 +168,16 @@ public class ReservasController {
         List<JoinReservasClientes> listaReservas = reservasService.dameReservasClientes();
         return ResponseEntity.ok(listaReservas);
     }
+
+    // Método para hacer un JOIN con ambas tablas filtrado por habitacion y entrada
+    // Endpoint de ejemplo: [GET] http://localhost:8100/reservas/consultar/join/118/2024-03-23
+    @GetMapping("/consultar/join/{hab}/{entrada}")
+    public ResponseEntity<List<JoinReservasClientes>> consultarReservasClientesHabEntrada(
+        @PathVariable int hab, @PathVariable LocalDate entrada) 
+        {
+            List<JoinReservasClientes> listaReservas = reservasService.damePorHabitacionEntrada(hab, entrada);
+            return ResponseEntity.ok(listaReservas);
+        }
     
 
 }
