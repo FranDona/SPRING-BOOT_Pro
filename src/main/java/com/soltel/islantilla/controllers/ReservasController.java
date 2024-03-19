@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -137,13 +137,22 @@ public class ReservasController {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
+    // Método para borrar
+    // Endpoint de ejemplo: [DELETE] http://localhost:8100/reservas/eliminar/120/2024-03-28
+    @DeleteMapping("/eliminar/{hab}/{entrada}")
+    public ResponseEntity<?> deleteReserva (@PathVariable int hab, @PathVariable LocalDate entrada) {
+
+        // 1º Busco si la reserva YA existe
+        Optional<ReservasModel> reserva = reservasService.findReservaById(hab, entrada);
+
+        if(!reserva.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Reserva NO existe!");
+        } else {
+            // Ejecuto el borrado si la reserva existe
+            reservasService.deleteReserva(hab, entrada);
+            return ResponseEntity.ok("Reserva eliminada!");
+        } 
+    }
     
     
     
